@@ -2,10 +2,10 @@
 
 Este projeto armazena dados de batalhas de Clash Royale da base de dados em um banco de dados MongoDB e realiza consultas analíticas para auxiliar no balanceamento do jogo. O projeto está dividido em dois arquivos principais:
 
-- **create_db.py**: Cria o banco de dados e insere os dados das batalhas.
-- **run_queries.py**: Executa consultas sobre os dados armazenados.
+- **`create_db.py`**: Cria o banco de dados e insere os dados das batalhas.
+- **`run_queries.py`**: Executa consultas sobre os dados armazenados.
 
-O .csv utilizado foi o `BattlesStaging_01042021_WL_tagged.csv` da base de dados [Clash Royale S18 Ladder Datasets](https://www.kaggle.com/datasets/bwandowando/clash-royale-season-18-dec-0320-dataset)
+O .csv utilizado foi o `BattlesStaging_01042021_WL_tagged.csv` da base de dados [Clash Royale S18 Ladder Datasets](https://www.kaggle.com/datasets/bwandowando/clash-royale-season-18-dec-0320-dataset).
 
 ## Requisitos
 
