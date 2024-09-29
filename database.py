@@ -20,7 +20,6 @@ try:
     # Carregar o CSV (ajuste o caminho do arquivo conforme necessário)
     df = pd.read_csv('BattlesStaging_n_WL_tagged.csv')
     print("Arquivo .csv carregado com sucesso!")
-    print(df.head())
 except Exception as e:
     print(e)
 
@@ -66,5 +65,4 @@ batalhas_collection = db['batalhas']
 # Inserir todas as batalhas
 batalhas_collection.insert_many(batalhas.tolist())
 
-# Exibir a primeira batalha inserida
-print(batalhas_collection.find_one())
+print("Banco criado e dados inseridos com sucesso!")
