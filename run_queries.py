@@ -13,25 +13,31 @@ batalhas_collection = db['batalhas']
 def str_to_datetime(date_str):
     return datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S%z")
 
-### Consulta 1: Calcular a porcentagem de vitórias usando uma carta X em um intervalo de tempo
+# Ajuste na função para calcular vitórias
 def calcular_vitorias_por_carta(carta_id, start_time, end_time):
+    # Converta start_time e end_time para o formato correto
+    start_time_str = start_time.strftime("%Y-%m-%d %H:%M:%S%z")
+    end_time_str = end_time.strftime("%Y-%m-%d %H:%M:%S%z")
+
     total_batalhas = batalhas_collection.count_documents({
-        "battle_time": {"$gte": start_time, "$lte": end_time}
+        "battle_time": {"$gte": start_time_str, "$lte": end_time_str}
     })
     vitorias_com_carta = batalhas_collection.count_documents({
-        "battle_time": {"$gte": start_time, "$lte": end_time},
+        "battle_time": {"$gte": start_time_str, "$lte": end_time_str},
         "winner.deck": carta_id
     })
+
     if total_batalhas > 0:
         porcentagem = (vitorias_com_carta / total_batalhas) * 100
     else:
         porcentagem = 0
+
     return porcentagem
 
 # Exemplo de parâmetros
 carta_id = 26000000  # ID da carta
-start_time = str_to_datetime("2021-01-01T00:00:00+00:00")
-end_time = str_to_datetime("2021-12-31T23:59:59+00:00")
+start_time = str_to_datetime("2020-01-01T00:00:00+00:00")
+end_time = str_to_datetime("2022-12-31T23:59:59+00:00")
 
 print(f"Porcentagem de vitórias com a carta {carta_id}: {calcular_vitorias_por_carta(carta_id, start_time, end_time)}%")
 
