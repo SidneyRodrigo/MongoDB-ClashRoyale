@@ -39,9 +39,11 @@ def listar_decks_com_vitorias(min_porcentagem, start_time, end_time):
     return result
 
 # Exemplo de uso
-min_vitorias = 100
+min_vitorias = 500
+
 start_time = datetime(2021, 1, 1)
 end_time = datetime(2021, 12, 31)
+
 min_porcentagem = 100.0
 
 decks = listar_decks_com_vitorias(min_porcentagem, start_time, end_time)
