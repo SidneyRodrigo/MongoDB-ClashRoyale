@@ -12,10 +12,6 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 db = client['clash_royale']
 batalhas_collection = db['batalhas']
 
-# conversão de data
-def str_to_datetime(date_str):
-    return datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S%z")
-
 # Consulta 5
 def listar_combos_com_vitorias(tamanho_combo, min_porcentagem, start_time, end_time):
     pipeline = [
@@ -33,8 +29,8 @@ def listar_combos_com_vitorias(tamanho_combo, min_porcentagem, start_time, end_t
 tamanho_combo = 3  # tamanho do combo
 min_porcentagem = 80.0  # porcentagem mínima de vitórias
 
-start_time = str_to_datetime(datetime(2021, 1, 1))
-end_time = str_to_datetime(datetime(2021, 12, 31))
+start_time = "2021-01-01 00:00:00"
+end_time = "2021-12-31 23:59:59"
 
 combos = listar_combos_com_vitorias(tamanho_combo, min_porcentagem, start_time, end_time)
 
