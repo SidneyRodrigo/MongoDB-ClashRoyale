@@ -4,47 +4,60 @@ import { TextInput, Card, Button } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
-  const [number, setNumber] = useState('');
-  const [percentage, setPercentage] = useState('');
-  const [timestamps1, setTimestamps1] = useState('');
-  const [timestamps2, setTimestamps2] = useState('');
-  const [timestamps3, setTimestamps3] = useState('');
-  const [timestamps4, setTimestamps4] = useState('');
-  const [timestamps5, setTimestamps5] = useState('');
+  // Estado para todos os parâmetros necessários
+  const [card, setCard] = useState(''); // Carta X
+  const [card2, setCard2] = useState(''); // Carta X
+  const [percentage, setPercentage] = useState(''); // Porcentagem X
+  const [timestamps1, setTimestamps1] = useState(''); // Intervalo de timestamps
+  const [timestamps2, setTimestamps2] = useState(''); // Intervalo de timestamps
+  const [timestamps3, setTimestamps3] = useState(''); // Intervalo de timestamps
+  const [timestamps4, setTimestamps4] = useState(''); // Intervalo de timestamps
+  const [comboCards, setComboCards] = useState(''); // Combo de cartas (X1,X2,...)
+  const [trophyPercentage, setTrophyPercentage] = useState(''); // Z%
+  const [duration, setDuration] = useState(''); // Duração da partida
+  const [towerCount, setTowerCount] = useState(''); // Número de torres derrubadas
+  const [comboSize, setComboSize] = useState(''); // Tamanho N do combo
+  const [victoryPercentage, setVictoryPercentage] = useState(''); // Y%
 
   return (
     <>
       <View style={styles.app}>      
         <View style={styles.gridContainer}>
+
+          {/* 1. Calcule a porcentagem de vitórias e derrotas utilizando a carta X */}
           <Card style={styles.card}>
             <Card.Content>
-              <Text>Selecione Uma Carta e uma data</Text>
+              <Text>Calcule a porcentagem de vitórias e derrotas</Text>
               <TextInput
-                label="Digite um número"
-                value={number}
-                onChangeText={setNumber}
-                keyboardType="numeric"
+                label="Digite a carta (X)"
+                value={card}
+                onChangeText={setCard}
                 mode="outlined" 
                 style={styles.input}
               />
               <TextInput
-                label="Digite o timestamp"
+                label="Digite o intervalo de timestamps"
                 value={timestamps1}
                 onChangeText={setTimestamps1}
                 mode="outlined" 
                 style={styles.input}
               />
             </Card.Content>
-            <Button mode="contained" onPress={() => console.log('Número e Timestamp:', number, timestamps1)} style={styles.button}>
-            procurar
-          </Button>
+            <Button 
+              mode="contained" 
+              onPress={() => console.log('Carta e Timestamp:', card, timestamps1)} 
+              style={styles.button}
+            >
+              Procurar
+            </Button>
           </Card>
 
+          {/* 2. Liste os decks completos que produziram mais de X% de vitórias */}
           <Card style={styles.card}>
             <Card.Content>
-              <Text>Digite a porcentagem desejada e a data</Text>
+              <Text>Liste decks com mais de X% de vitórias</Text>
               <TextInput
-                label="Digite uma porcentagem"
+                label="Digite a porcentagem (X)"
                 value={percentage}
                 onChangeText={setPercentage}
                 keyboardType="numeric"
@@ -52,88 +65,114 @@ export default function App() {
                 style={styles.input}
               />
               <TextInput
-                label="Digite o timestamp"
+                label="Digite o intervalo de timestamps"
                 value={timestamps2}
                 onChangeText={setTimestamps2}
                 mode="outlined" 
                 style={styles.input}
               />
             </Card.Content>
-            <Button mode="contained" onPress={() => console.log('Porcentagem e Timestamp:', percentage, timestamps2)} style={styles.button}>
-            procurar
-          </Button>
+            <Button 
+              mode="contained" 
+              onPress={() => console.log('Porcentagem e Timestamp:', percentage, timestamps2)} 
+              style={styles.button}
+            >
+              Procurar
+            </Button>
           </Card>
 
+          {/* 3. Calcule a quantidade de derrotas utilizando o combo de cartas */}
           <Card style={styles.card}>
             <Card.Content>
-              <Text>Calcular derrotas com combo de cartas</Text>
+              <Text>Calcule derrotas com combo de cartas</Text>
               <TextInput
-                label="Digite um número"
-                value={number}
-                onChangeText={setNumber}
-                keyboardType="numeric"
+                label="Digite o combo de cartas (X1,X2,...)"
+                value={comboCards}
+                onChangeText={setComboCards}
                 mode="outlined"
                 style={styles.input}
               />
               <TextInput
-                label="Digite o timestamp"
-                value={timestamps3}
+                label="Digite o intervalo de timestamps"
+                value={timestamps3} // Reutilizando o primeiro timestamp
                 onChangeText={setTimestamps3}
                 mode="outlined" 
                 style={styles.input}
               />
             </Card.Content>
-            <Button mode="contained" onPress={() => console.log('Número e Timestamp:', number, timestamps3)} style={styles.button}>
-            procurar
-          </Button>
+            <Button 
+              mode="contained" 
+              onPress={() => console.log('Combo de cartas e Timestamp:', comboCards, timestamps3)} 
+              style={styles.button}
+            >
+              Procurar
+            </Button>
           </Card>
 
+          {/* 4. Calcule a quantidade de vitórias envolvendo a carta X */}
           <Card style={styles.card}>
             <Card.Content>
-              <Text>Vitórias com menos troféus e duas torres derrubadas</Text>
+              <Text>Vitórias com carta X e condições específicas</Text>
               <TextInput
-                label="Digite um número"
-                value={number}
-                onChangeText={setNumber}
+                label="Digite a carta (X)"
+                value={card2}
+                onChangeText={setCard2}
+                mode="outlined"
+                style={styles.input}
+              />
+              <TextInput
+                label="Digite Z% (menos troféus)"
+                value={trophyPercentage}
+                onChangeText={setTrophyPercentage}
+                keyboardType="numeric"
+                mode="outlined"
+                style={styles.input}
+              />             
+            </Card.Content>
+            <Button 
+              mode="contained" 
+              onPress={() => console.log('Carta, Z%, Duração e Torres:', card, trophyPercentage, duration, towerCount)} 
+              style={styles.button}
+            >
+              Procurar
+            </Button>
+          </Card>
+
+          {/* 5. Liste o combo de cartas de tamanho N que produziu mais de Y% de vitórias */}
+          <Card style={styles.card}>
+            <Card.Content>
+              <Text>Combo de cartas de tamanho N com mais de Y% de vitórias</Text>
+              <TextInput
+                label="Digite o tamanho do combo (N)"
+                value={comboSize}
+                onChangeText={setComboSize}
                 keyboardType="numeric"
                 mode="outlined"
                 style={styles.input}
               />
               <TextInput
-                label="Digite o timestamp"
-                value={timestamps4}
+                label="Digite a porcentagem (Y)"
+                value={victoryPercentage}
+                onChangeText={setVictoryPercentage}
+                keyboardType="numeric"
+                mode="outlined"
+                style={styles.input}
+              />
+              <TextInput
+                label="Digite o intervalo de timestamps"
+                value={timestamps3} // Reutilizando o primeiro timestamp
                 onChangeText={setTimestamps4}
                 mode="outlined" 
                 style={styles.input}
               />
             </Card.Content>
-            <Button mode="contained" onPress={() => console.log('Número e Timestamp:', number, timestamps4)} style={styles.button}>
-            procurar
-          </Button>
-          </Card>
-
-          <Card style={styles.card}>
-            <Card.Content>
-              <Text>Combos de cartas que geram vitórias</Text>
-              <TextInput
-                label="Digite um número"
-                value={number}
-                onChangeText={setNumber}
-                keyboardType="numeric"
-                mode="outlined"
-                style={styles.input}
-              />
-              <TextInput
-                label="Digite o timestamp"
-                value={timestamps5}
-                onChangeText={setTimestamps5}
-                mode="outlined" 
-                style={styles.input}
-              />
-            </Card.Content>
-            <Button mode="contained" onPress={() => console.log('Número e Timestamp:', number, timestamps5)} style={styles.button}>
-            procurar
-          </Button>
+            <Button 
+              mode="contained" 
+              onPress={() => console.log('Tamanho do combo, Y% e Timestamp:', comboSize, victoryPercentage, timestamps4)} 
+              style={styles.button}
+            >
+              Procurar
+            </Button>
           </Card>         
         </View>
       </View>

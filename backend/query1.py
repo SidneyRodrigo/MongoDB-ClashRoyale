@@ -1,20 +1,21 @@
-# imports
+from flask import Flask, request, jsonify
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from datetime import datetime
 
-# dados para conexão
-senha = input("Insira a senha do banco de dados: ")
+app = Flask(__name__)
+
+# Conexão com o MongoDB (a senha será fornecida uma vez)
+senha = "sua_senha_aqui"
 uri = f"mongodb+srv://ioshuan:{senha}@cluster0.azdlm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-# conexão em sí
+# conexão com o MongoDB
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client['clash_royale']
 batalhas_collection = db['batalhas']
 
-# Ajuste na função para calcular vitórias
+# Função para calcular vitórias por carta
 def calcular_vitorias_por_carta(carta_id, start_time, end_time):
-    # Converta start_time e end_time para o formato correto
     start_time_str = start_time.strftime("%Y-%m-%d %H:%M:%S%z")
     end_time_str = end_time.strftime("%Y-%m-%d %H:%M:%S%z")
 
@@ -33,10 +34,29 @@ def calcular_vitorias_por_carta(carta_id, start_time, end_time):
 
     return porcentagem
 
-# parâmetros
-carta_id = 26000003  # ID da carta
+# Rota para calcular vitórias por carta
+@app.route('/vitorias', methods=['GET'])
+def vitorias():
+    try:
+        # Parâmetros da requisição
+        carta_id = int(request.args.get('carta_id'))
+        start_time_str = request.args.get('start_time')
+        end_time_str = request.args.get('end_time')
 
-start_time = datetime(2020, 1, 1)
-end_time = datetime(2022, 12, 31)
+        # Converte strings para datetime
+        start_time = datetime.strptime(start_time_str, "%Y-%m-%d")
+        end_time = datetime.strptime(end_time_str, "%Y-%m-%d")
 
-print(f"Porcentagem de vitórias com a carta {carta_id}: {calcular_vitorias_por_carta(carta_id, start_time, end_time)}%")
+        # Calcula a porcentagem de vitórias
+        porcentagem = calcular_vitorias_por_carta(carta_id, start_time, end_time)
+
+        return jsonify({
+            'carta_id': carta_id,
+            'porcentagem_vitorias': porcentagem
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True)
