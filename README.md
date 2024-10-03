@@ -17,7 +17,7 @@ O .csv utilizado foi o `BattlesStaging_01042021_WL_tagged.csv` da base de dados 
   Você pode instalar as dependências usando o seguinte comando:
 
 ```bash
-pip install pandas pymongo dnspython
+pip install pandas pymongo
 ```
 
 - Conta no MongoDB Atlas: Se você ainda não tem uma conta, clique aqui para criar uma gratuitamente e configurar o cluster.
